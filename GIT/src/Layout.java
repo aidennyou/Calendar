@@ -43,7 +43,7 @@ public class Layout extends JFrame {
 			buildMigForm(datepanel);
 			
 			datepanel = new JPanel();
-			datepanel.add(new JButton("hi"));
+//			datepanel.add(new JButton("hi"));
 			datepanel.setBackground(Color.white);
 			datepanel.add(datewidget);
 			datepanel.setPreferredSize(new Dimension(75,100));
