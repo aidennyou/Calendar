@@ -52,27 +52,27 @@ public class Layout extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout());
-		panel.setPreferredSize(new Dimension(400, 400));
-		
+		panel.setPreferredSize(new Dimension(400, 600));
+
 		int prevMonth = cal.get(Calendar.MONTH) ;
 		cal.add ( Calendar.DATE, -1 );
 		for (int b = 0; b<100; b++){
 			cal.add ( Calendar.DATE, 1 );
 			if(prevMonth != cal.get(Calendar.MONTH)) break;
-			
+
 			JPanel datepanel = new JPanel();
 			panel.add(datepanel);
 			datepanel.add(datewidget);
-			datewidget.setPreferredSize(new Dimension(80,100));
+			datewidget.setPreferredSize(new Dimension(75,100));
 			buildMigForm(datepanel);
 
 			for(int i = 0 ; i < curDayNum ; i++)
 				System.out.print("\t");
 
-//			System.out.print(cal.get(Calendar.DATE));
-			
+			//			System.out.print(cal.get(Calendar.DATE));
+
 			datepanel = new JPanel();
-			
+
 			int date = cal.get(Calendar.DATE);
 			datepanel.add(new JLabel(Integer.toString(date)));
 
@@ -81,7 +81,7 @@ public class Layout extends JFrame {
 			datepanel.setPreferredSize(new Dimension(75,100));
 			panel.add(datepanel);
 
-			for (int a = 0; a<30; a++){
+			for (int a = 0; a<50; a++){
 
 			}
 
@@ -100,6 +100,7 @@ public class Layout extends JFrame {
 		JPanel thursdaypanel = new JPanel();
 		JPanel fridaypanel = new JPanel();
 		JPanel saturdaypanel = new JPanel();
+
 		sundaywidget.setPreferredSize(new Dimension(80, 50));
 		mondaywidget.setPreferredSize(new Dimension(80, 50)); 
 		tuesdaywidget.setPreferredSize(new Dimension(80, 50));
@@ -244,7 +245,7 @@ public class Layout extends JFrame {
 		setUpLabel(fridaywidget, new Color(250,250,250), Color.BLACK, labelFont);
 
 		saturdaywidget = new JLabel("Saturday", SwingConstants.CENTER);
-		setUpLabel(saturdaywidget, new Color(250,250,250), Color.BLACK, labelFont);
+		setUpLabel(saturdaywidget, new Color(250,250,250), Color.GRAY, labelFont);
 
 		datewidget = new JLabel("", SwingConstants.CENTER);
 		setUpLabel(datewidget, new Color(250,250,250), Color.black, labelFont);
