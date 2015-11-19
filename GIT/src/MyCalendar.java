@@ -18,7 +18,7 @@ public class MyCalendar extends JFrame {
 	JLabel fridaywidget;
 	JLabel saturdaywidget;
 	JButton nextmonth;
-	JButton today;
+	JButton todaymonth;
 	JButton prevmonth;
 	JPanel nextpanel;
 	JPanel datePanel = new JPanel();
@@ -39,26 +39,50 @@ public class MyCalendar extends JFrame {
 		Date nDate = new Date();
 		Calendar cal = Calendar.getInstance() ;
 		cal.setTime(nDate);
-		cal.add (Calendar.DATE, -cal.get(Calendar.DATE));
+		cal.add (Calendar.DATE, -cal.get(Calendar.DATE)+1);
 		JPanel curDatePanel = buildDatePanel(cal); 
 
 		datePanel = buildDatePanel(cal);
 		calendarpanel.add(datePanel, BorderLayout.CENTER);
 
-		//		JPanel prevDatePanel = buildDatePanel(cal);
-		//		calendarpanel.remove(curDatePanel);
-		//		calendarpanel.add(prevDatePanel, BorderCalendar.CENTER);
-		//
-		//		JPanel nextdatePanel = buildDatePanel(cal);
-		//		nextdatePanel.remove(curDatePanel);
-		//		calendarpanel.add(nextdatePanel, BorderCalendar.CENTER);
-
 		add(calendarpanel, BorderLayout.CENTER);
 
 		prevmonth = new JButton();
-		today = new JButton();
+		todaymonth = new JButton();
 		nextmonth = new JButton();
 
+		JButton prevmonth = new JButton("<");
+		prevmonth.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				calendarpanel.remove(datePanel);
+
+				cal.add(Calendar.MONDAY, -1);
+
+				datePanel = buildDatePanel(cal);
+				calendarpanel.add(datePanel, BorderLayout.CENTER);
+				calendarpanel.validate();
+				calendarpanel.repaint();
+				
+			}
+		});
+		
+		JButton todaymonth = new JButton("Today");
+		todaymonth.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				calendarpanel.remove(datePanel);
+
+				cal.setTime(nDate);
+				cal.add (Calendar.DATE, -cal.get(Calendar.DATE)+1 );
+
+				datePanel = buildDatePanel(cal);
+				calendarpanel.add(datePanel, BorderLayout.CENTER);
+				calendarpanel.validate();
+				calendarpanel.repaint();
+				
+			}
+		});
 
 		JButton nextmonth = new JButton(">");
 		nextmonth.addActionListener(new ActionListener(){
@@ -72,19 +96,17 @@ public class MyCalendar extends JFrame {
 				calendarpanel.add(datePanel, BorderLayout.CENTER);
 				calendarpanel.validate();
 				calendarpanel.repaint();
+					
+				
 			}
 		});
-
-
-
-
 
 		JPanel controlpanel = new JPanel();
 		FlowLayout fLayout = new FlowLayout();
 		fLayout.setAlignment(FlowLayout.RIGHT);
 		controlpanel.setLayout(fLayout);
 		controlpanel.add(prevmonth);
-		controlpanel.add(today);
+		controlpanel.add(todaymonth);
 		controlpanel.add(nextmonth);
 
 		add(controlpanel, BorderLayout.NORTH);
@@ -109,8 +131,11 @@ public class MyCalendar extends JFrame {
 
 		int curDayNum = cal.get(Calendar.DAY_OF_WEEK) ;	
 
-		System.out.println(""+curYear+"/"+curMonth+"/"+curDay);
 
+		String day = "";
+
+
+		System.out.println(""+curYear+"/"+curMonth+"/"+curDay);
 
 		JPanel panel = new JPanel();
 		FlowLayout fLayout = new FlowLayout();
@@ -145,6 +170,7 @@ public class MyCalendar extends JFrame {
 
 			JPanel nextpanel = new JPanel();
 			nextpanel = new JPanel ();
+
 
 		}	
 
