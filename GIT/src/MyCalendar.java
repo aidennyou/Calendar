@@ -351,7 +351,6 @@ public class MyCalendar extends JFrame {
 		label.setFont(f);    
 	}
 
-
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
