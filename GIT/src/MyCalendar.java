@@ -17,13 +17,12 @@ public class MyCalendar extends JFrame {
 	JLabel thursdaywidget;
 	JLabel fridaywidget;
 	JLabel saturdaywidget;
-	JButton nextmonth;
-	JButton todaymonth;
-	JButton prevmonth;
+	JButton newevent;
 	JPanel nextpanel;
 	JPanel datePanel = new JPanel();
-
-
+	JLabel DateDisplay;
+	JPanel controlpanel;
+	JPanel southpanel;
 
 	public MyCalendar(String title) {
 		super(title);
@@ -35,21 +34,21 @@ public class MyCalendar extends JFrame {
 		calendarpanel.setLayout(new BorderLayout());		
 		calendarpanel.add(buildMiGDashboard(), BorderLayout.NORTH);
 
+		controlpanel = new JPanel();
+		FlowLayout fLayout = new FlowLayout();
+		fLayout.setAlignment(FlowLayout.RIGHT);
+		controlpanel.setLayout(fLayout);
 
 		Date nDate = new Date();
 		Calendar cal = Calendar.getInstance() ;
 		cal.setTime(nDate);
 		cal.add (Calendar.DATE, -cal.get(Calendar.DATE)+1);
-		JPanel curDatePanel = buildDatePanel(cal); 
 
 		datePanel = buildDatePanel(cal);
 		calendarpanel.add(datePanel, BorderLayout.CENTER);
 
 		add(calendarpanel, BorderLayout.CENTER);
 
-		prevmonth = new JButton();
-		todaymonth = new JButton();
-		nextmonth = new JButton();
 
 		JButton prevmonth = new JButton("<");
 		prevmonth.addActionListener(new ActionListener(){
@@ -63,10 +62,10 @@ public class MyCalendar extends JFrame {
 				calendarpanel.add(datePanel, BorderLayout.CENTER);
 				calendarpanel.validate();
 				calendarpanel.repaint();
-				
+
 			}
 		});
-		
+
 		JButton todaymonth = new JButton("Today");
 		todaymonth.addActionListener(new ActionListener(){
 			@Override
@@ -80,7 +79,6 @@ public class MyCalendar extends JFrame {
 				calendarpanel.add(datePanel, BorderLayout.CENTER);
 				calendarpanel.validate();
 				calendarpanel.repaint();
-				
 			}
 		});
 
@@ -96,31 +94,36 @@ public class MyCalendar extends JFrame {
 				calendarpanel.add(datePanel, BorderLayout.CENTER);
 				calendarpanel.validate();
 				calendarpanel.repaint();
-					
-				
 			}
 		});
 
-		JPanel controlpanel = new JPanel();
-		FlowLayout fLayout = new FlowLayout();
-		fLayout.setAlignment(FlowLayout.RIGHT);
-		controlpanel.setLayout(fLayout);
 		controlpanel.add(prevmonth);
 		controlpanel.add(todaymonth);
 		controlpanel.add(nextmonth);
-
 		add(controlpanel, BorderLayout.NORTH);
+
+
+		JButton newevent = new JButton("+");
+		newevent.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
+		JPanel southpanel = new JPanel();
+		
+		southpanel.setLayout(fLayout);
+		southpanel.add(newevent);
+		add(southpanel, BorderLayout.SOUTH);
 
 		pack();
 
 	}
 
-	JLabel datewidget;
 
 
 	private JPanel buildDatePanel(Calendar cal){
-
-
 
 		int range = 100;
 
@@ -129,11 +132,54 @@ public class MyCalendar extends JFrame {
 		int curMonth = cal.get(Calendar.MONTH)+1;
 		int curYear = cal.get(Calendar.YEAR);
 
-		int curDayNum = cal.get(Calendar.DAY_OF_WEEK) ;	
+		int curDayNum = cal.get(Calendar.DAY_OF_WEEK)-1 ;	
 
+		String month = "";
 
-		String day = "";
+		switch(curMonth){
+		case 1:
+			month = "January";
+			break ;
+		case 2:
+			month = "February";
+			break ;
+		case 3:
+			month = "March";
+			break ;
+		case 4:
+			month = "April";
+			break ;
+		case 5:
+			month = "May";
+			break ;
+		case 6:
+			month = "June";
+			break ;
+		case 7:
+			month = "July";
+			break ;
+		case 8:
+			month = "August";
+			break;
+		case 9:
+			month = "September";
+			break;
+		case 10:
+			month = "October";
+			break;
+		case 11:
+			month = "November";
+			break;
+		case 12:
+			month = "December";
+			break;
+		}
 
+		JLabel DateDisplay = new JLabel (month+" "+curYear);
+		JPanel Display = new JPanel();
+		Display.setBackground(Color.white);
+		Display.add(DateDisplay);
+		controlpanel.add(Display);
 
 		System.out.println(""+curYear+"/"+curMonth+"/"+curDay);
 
@@ -141,35 +187,48 @@ public class MyCalendar extends JFrame {
 		FlowLayout fLayout = new FlowLayout();
 		fLayout.setAlignment(FlowLayout.LEFT);
 		panel.setLayout(fLayout);
-		panel.setBorder(BorderFactory.createEmptyBorder(0, 11, 0, 0));
 		panel.setPreferredSize(new Dimension(400, 600));
+		panel.setBorder(BorderFactory.createEmptyBorder(0, 11, 0, 0));
 
 		int thisMonth = cal.get(Calendar.MONTH) ;
 		int offset = 0;
 		cal.add ( Calendar.DATE, -1 );
 		offset++;
+		for(int i = 0 ; i < curDayNum ; i++){
+			JPanel bPanel = new JPanel();
+			bPanel.setBackground(Color.white);
+			bPanel.setPreferredSize(new Dimension(91,100));
+			panel.add(bPanel);
+		}
+
 		for (int b = 0; b<100; b++){
 			cal.add ( Calendar.DATE, 1 );
 			offset--;
 
 			if(thisMonth != cal.get(Calendar.MONTH)) break;
 
-
 			int date = cal.get(Calendar.DATE);
 			JPanel dPanel = new JPanel();
-			dPanel.add(new JLabel(Integer.toString(date)));
+			dPanel.setLayout(new BorderLayout());
+
 
 			dPanel.setBackground(Color.white);
-			dPanel.add(datewidget);
 			dPanel.setPreferredSize(new Dimension(91,100));
 			panel.add(dPanel);
+
+			JPanel dNPanel = new JPanel();
+			dNPanel.setBackground(Color.WHITE);
+			FlowLayout Flayout = new FlowLayout();
+			Flayout.setAlignment(FlowLayout.RIGHT);
+			dNPanel.setLayout(Flayout);
+			JLabel datewidget = new JLabel(Integer.toString(date));
+			dNPanel.add(datewidget);
+
+			dPanel.add(dNPanel, BorderLayout.NORTH);
 
 			for (int a = 0; a<50; a++){
 
 			}
-
-			JPanel nextpanel = new JPanel();
-			nextpanel = new JPanel ();
 
 
 		}	
@@ -181,7 +240,6 @@ public class MyCalendar extends JFrame {
 
 
 	private JPanel buildMiGDashboard() {
-
 
 		JPanel panel = new JPanel();
 		JPanel sundaypanel = new JPanel();
@@ -202,7 +260,6 @@ public class MyCalendar extends JFrame {
 		fridaywidget.setPreferredSize(new Dimension(dateWidgetWidth, 50));
 		saturdaywidget.setPreferredSize(new Dimension(dateWidgetWidth, 50));
 		panel.setLayout(new MigLayout());
-
 
 		sundaypanel.add(sundaywidget, "0,0,0");
 		mondaypanel.add(mondaywidget, "0,0,0");
@@ -228,7 +285,6 @@ public class MyCalendar extends JFrame {
 		buildMigForm(fridaypanel);
 		panel.setLayout(new MigLayout());
 		buildMigForm(saturdaypanel);
-
 
 		sundaypanel = new JPanel();
 		sundaypanel.setBackground(Color.white);
@@ -281,7 +337,6 @@ public class MyCalendar extends JFrame {
 		return panel;
 
 	}
-
 
 	private void buildMigForm(JPanel bigpanel) {
 		// TODO Auto-generated method stub
@@ -338,10 +393,6 @@ public class MyCalendar extends JFrame {
 
 		saturdaywidget = new JLabel("Saturday", SwingConstants.CENTER);
 		setUpLabel(saturdaywidget, new Color(250,250,250), Color.GRAY, labelFont);
-
-		datewidget = new JLabel("", SwingConstants.CENTER);
-		setUpLabel(datewidget, new Color(250,250,250), Color.black, labelFont);
-
 
 	}
 	private void setUpLabel(JLabel label, Color bg, Color fg, Font f) {
