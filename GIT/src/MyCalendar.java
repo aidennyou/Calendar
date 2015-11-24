@@ -24,6 +24,123 @@ public class MyCalendar extends JFrame {
 	JPanel controlpanel;
 	JPanel southpanel;
 
+	private JPanel buildDatePanel(Calendar cal){
+
+		int range = 100;
+
+		int curDay = cal.get(Calendar.DATE);
+		int curDate = cal.get(Calendar.DAY_OF_WEEK);
+		int curMonth = cal.get(Calendar.MONTH)+1;
+		int curYear = cal.get(Calendar.YEAR);
+
+		int curDayNum = cal.get(Calendar.DAY_OF_WEEK)-1 ;	
+
+		String month = "";
+
+		switch(curMonth){
+		case 1:
+			month = "January";
+			break ;
+		case 2:
+			month = "February";
+			break ;
+		case 3:
+			month = "March";
+			break ;
+		case 4:
+			month = "April";
+			break ;
+		case 5:
+			month = "May";
+			break ;
+		case 6:
+			month = "June";
+			break ;
+		case 7:
+			month = "July";
+			break ;
+		case 8:
+			month = "August";
+			break;
+		case 9:
+			month = "September";
+			break;
+		case 10:
+			month = "October";
+			break;
+		case 11:
+			month = "November";
+			break;
+		case 12:
+			month = "December";
+			break;
+		}
+
+		JLabel DateDisplay = new JLabel (month+" "+curYear);
+		
+		
+		JPanel Display = new JPanel();
+		Display.setBackground(Color.white);
+		Display.add(DateDisplay);
+		controlpanel.add(Display);
+
+		System.out.println(""+curYear+"/"+curMonth+"/"+curDay);
+
+		JPanel panel = new JPanel();
+		FlowLayout fLayout = new FlowLayout();
+		fLayout.setAlignment(FlowLayout.LEFT);
+		panel.setLayout(fLayout);
+		panel.setPreferredSize(new Dimension(400, 600));
+		panel.setBorder(BorderFactory.createEmptyBorder(0, 11, 0, 0));
+
+		int thisMonth = cal.get(Calendar.MONTH) ;
+		int offset = 0;
+		cal.add ( Calendar.DATE, -1 );
+		offset++;
+		for(int i = 0 ; i < curDayNum ; i++){
+			JPanel bPanel = new JPanel();
+			bPanel.setBackground(Color.white);
+			bPanel.setPreferredSize(new Dimension(91,100));
+			panel.add(bPanel);
+		}
+
+		for (int b = 0; b<100; b++){
+			cal.add ( Calendar.DATE, 1 );
+			offset--;
+
+			if(thisMonth != cal.get(Calendar.MONTH)) break;
+
+			int date = cal.get(Calendar.DATE);
+			JPanel dPanel = new JPanel();
+			dPanel.setLayout(new BorderLayout());
+
+
+			dPanel.setBackground(Color.white);
+			dPanel.setPreferredSize(new Dimension(91,100));
+			panel.add(dPanel);
+
+			JPanel dNPanel = new JPanel();
+			dNPanel.setBackground(Color.WHITE);
+			FlowLayout Flayout = new FlowLayout();
+			Flayout.setAlignment(FlowLayout.RIGHT);
+			dNPanel.setLayout(Flayout);
+			JLabel datewidget = new JLabel(Integer.toString(date));
+			dNPanel.add(datewidget);
+
+			dPanel.add(dNPanel, BorderLayout.NORTH);
+
+			for (int a = 0; a<50; a++){
+
+			}
+
+
+		}	
+
+		cal.add (Calendar.DATE, offset );
+
+		return panel;
+	}
+	
 	public MyCalendar(String title) {
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,124 +237,7 @@ public class MyCalendar extends JFrame {
 		pack();
 
 	}
-
-
-
-	private JPanel buildDatePanel(Calendar cal){
-
-		int range = 100;
-
-		int curDay = cal.get(Calendar.DATE);
-		int curDate = cal.get(Calendar.DAY_OF_WEEK);
-		int curMonth = cal.get(Calendar.MONTH)+1;
-		int curYear = cal.get(Calendar.YEAR);
-
-		int curDayNum = cal.get(Calendar.DAY_OF_WEEK)-1 ;	
-
-		String month = "";
-
-		switch(curMonth){
-		case 1:
-			month = "January";
-			break ;
-		case 2:
-			month = "February";
-			break ;
-		case 3:
-			month = "March";
-			break ;
-		case 4:
-			month = "April";
-			break ;
-		case 5:
-			month = "May";
-			break ;
-		case 6:
-			month = "June";
-			break ;
-		case 7:
-			month = "July";
-			break ;
-		case 8:
-			month = "August";
-			break;
-		case 9:
-			month = "September";
-			break;
-		case 10:
-			month = "October";
-			break;
-		case 11:
-			month = "November";
-			break;
-		case 12:
-			month = "December";
-			break;
-		}
-
-		JLabel DateDisplay = new JLabel (month+" "+curYear);
-		JPanel Display = new JPanel();
-		Display.setBackground(Color.white);
-		Display.add(DateDisplay);
-		controlpanel.add(Display);
-
-		System.out.println(""+curYear+"/"+curMonth+"/"+curDay);
-
-		JPanel panel = new JPanel();
-		FlowLayout fLayout = new FlowLayout();
-		fLayout.setAlignment(FlowLayout.LEFT);
-		panel.setLayout(fLayout);
-		panel.setPreferredSize(new Dimension(400, 600));
-		panel.setBorder(BorderFactory.createEmptyBorder(0, 11, 0, 0));
-
-		int thisMonth = cal.get(Calendar.MONTH) ;
-		int offset = 0;
-		cal.add ( Calendar.DATE, -1 );
-		offset++;
-		for(int i = 0 ; i < curDayNum ; i++){
-			JPanel bPanel = new JPanel();
-			bPanel.setBackground(Color.white);
-			bPanel.setPreferredSize(new Dimension(91,100));
-			panel.add(bPanel);
-		}
-
-		for (int b = 0; b<100; b++){
-			cal.add ( Calendar.DATE, 1 );
-			offset--;
-
-			if(thisMonth != cal.get(Calendar.MONTH)) break;
-
-			int date = cal.get(Calendar.DATE);
-			JPanel dPanel = new JPanel();
-			dPanel.setLayout(new BorderLayout());
-
-
-			dPanel.setBackground(Color.white);
-			dPanel.setPreferredSize(new Dimension(91,100));
-			panel.add(dPanel);
-
-			JPanel dNPanel = new JPanel();
-			dNPanel.setBackground(Color.WHITE);
-			FlowLayout Flayout = new FlowLayout();
-			Flayout.setAlignment(FlowLayout.RIGHT);
-			dNPanel.setLayout(Flayout);
-			JLabel datewidget = new JLabel(Integer.toString(date));
-			dNPanel.add(datewidget);
-
-			dPanel.add(dNPanel, BorderLayout.NORTH);
-
-			for (int a = 0; a<50; a++){
-
-			}
-
-
-		}	
-
-		cal.add (Calendar.DATE, offset );
-
-		return panel;
-	}
-
+	
 
 	private JPanel buildMiGDashboard() {
 
