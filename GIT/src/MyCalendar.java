@@ -76,15 +76,24 @@ public class MyCalendar extends JFrame {
 			break;
 		}
 
-		JLabel DateDisplay = new JLabel (month+" "+curYear);
-		
-		
-		JPanel Display = new JPanel();
-		Display.setBackground(Color.white);
-		Display.add(DateDisplay);
-		controlpanel.add(Display);
+		//Initial memory allocation moment
+		//If datedisply is null, that means we have never allocated it before.
+		if(DateDisplay == null){
+			DateDisplay = new JLabel (month+" "+curYear);
+			System.out.println(month+" "+curYear);
+			JPanel Display = new JPanel();
+			Display.setBackground(Color.white);
+			Display.add(DateDisplay);
+			controlpanel.add(Display);
+		}
+		//If we already made display panel, just change text of it.
+		//And then, repaint.
+		else{
+			DateDisplay.setText(month+" "+curYear);
+			controlpanel.repaint();
+		}
 
-		System.out.println(""+curYear+"/"+curMonth+"/"+curDay);
+		//System.out.println(""+curYear+"/"+curMonth+"/"+curDay);
 
 		JPanel panel = new JPanel();
 		FlowLayout fLayout = new FlowLayout();
